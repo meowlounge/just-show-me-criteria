@@ -10,6 +10,12 @@
   "icon": "assets/pinned-advancements/icon.png",
   "environment": "*",
   "entrypoints": {
+    "modmenu": [
+      {
+        "adapter": "kotlin",
+        "value": "dev.prodbyeagle.pinnedAdvancements.ModMenuIntegration"
+      }
+    ],
     "fabric-datagen": [
       "dev.prodbyeagle.pinnedAdvancements.client.PinnedAdvancementsDataGenerator"
     ],
@@ -23,6 +29,9 @@
   "mixins": [
     "pinned-advancements.mixins.json"
   ],
+  "suggests": {
+    "modmenu": "*"
+  },
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric-language-kotlin": ">=${kotlin_loader_version}",
