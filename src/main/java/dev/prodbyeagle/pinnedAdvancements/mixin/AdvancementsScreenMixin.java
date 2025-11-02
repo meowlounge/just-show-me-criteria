@@ -25,7 +25,7 @@ public abstract class AdvancementsScreenMixin {
             return;
         }
 
-        if (PinnedAdvancementSelector.handleRightClick((AdvancementsScreen) (Object) this, click)) { //Non-static method 'handleRightClick(net.minecraft.client.gui.screen.advancement.@org.jetbrains.annotations.NotNull AdvancementsScreen, net.minecraft.client.gui.@org.jetbrains.annotations.NotNull Click)' cannot be referenced from a static context
+        if (PinnedAdvancementSelector.INSTANCE.handleRightClick((AdvancementsScreen) (Object) this, click)) { //Non-static method 'handleRightClick(net.minecraft.client.gui.screen.advancement.@org.jetbrains.annotations.NotNull AdvancementsScreen, net.minecraft.client.gui.@org.jetbrains.annotations.NotNull Click)' cannot be referenced from a static context
             cir.setReturnValue(true);
         }
     }

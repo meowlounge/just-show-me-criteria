@@ -50,14 +50,14 @@ object PinnedAdvancementTracker {
         }
 
         val advancementHandler = networkHandler.advancementHandler
-        val entry = advancementHandler.get(id)
+        val accessor = advancementHandler as ClientAdvancementManagerAccessor
+        val entry = advancementHandler.get(id) ?: accessor.pinnedAdvancements_manager().get(id)
         if (entry == null) {
             display = null
             error = Text.literal("Advancement not found: $id")
             return
         }
 
-        val accessor = advancementHandler as ClientAdvancementManagerAccessor
         val progressMap = accessor.pinnedAdvancements_progresses()
         val progress = progressMap[entry] ?: createEmptyProgress(entry)
 
@@ -71,7 +71,6 @@ object PinnedAdvancementTracker {
         val displayData = advancement.display().orElse(null)
 
         val frame = displayData?.frame
-        val frameText = frame?.toastText
 
         val titleLines = if (config.showTitle) {
             val titleText = resolveTitle(config, displayData, entry)
@@ -105,7 +104,6 @@ object PinnedAdvancementTracker {
             entry = entry,
             frame = frame,
             progress = progress,
-            frameText = if (config.showTitle) frameText else null,
             titleLines = titleLines,
             descriptionLines = descriptionLines,
             progressText = progressText,

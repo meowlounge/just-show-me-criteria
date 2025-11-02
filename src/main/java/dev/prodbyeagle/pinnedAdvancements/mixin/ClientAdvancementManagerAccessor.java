@@ -1,6 +1,7 @@
 package dev.prodbyeagle.pinnedAdvancements.mixin;
 
 import net.minecraft.advancement.AdvancementEntry;
+import net.minecraft.advancement.AdvancementManager;
 import net.minecraft.advancement.AdvancementProgress;
 import net.minecraft.client.network.ClientAdvancementManager;
 import org.spongepowered.asm.mixin.Mixin;
@@ -13,4 +14,7 @@ public interface ClientAdvancementManagerAccessor {
 
     @Accessor("advancementProgresses")
     Map<AdvancementEntry, AdvancementProgress> pinnedAdvancements_progresses();
+
+    @Accessor("manager")
+    AdvancementManager pinnedAdvancements_manager();
 }

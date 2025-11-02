@@ -62,23 +62,18 @@ object PinnedAdvancementHudRenderer : HudElement {
         val client = MinecraftClient.getInstance()
         val textRenderer = client.textRenderer
 
-        val headerColor = parseColor(
+        val defaultTitleColor = parseColor(
             config.style.headerColor,
             if (display.isChallenge) -30465 else -256
         )
-        val titleColor = parseColor(config.style.titleColor, 0xFFFFFFFF.toInt())
+        val titleColor = parseColor(config.style.titleColor, defaultTitleColor)
         val descriptionColor = parseColor(config.style.descriptionColor, TEXT_COLOR_DESCRIPTION)
         val progressTextColor = parseColor(config.style.progressTextColor, TEXT_COLOR_PROGRESS)
         val progressBarColor = parseColor(config.style.progressBarColor, PROGRESS_BAR_FOREGROUND)
         val progressBarBackgroundColor = parseColor(config.style.progressBarBackgroundColor, PROGRESS_BAR_BACKGROUND)
 
         val textX = x + TEXT_AREA_START_X
-        var textY = y + 7
-
-        display.frameText?.let {
-            context.drawText(textRenderer, it, textX, textY, headerColor, false)
-            textY += 9
-        }
+        var textY = y + 5
 
         if (display.titleLines.isNotEmpty()) {
             textY = drawLines(context, textRenderer, display.titleLines, textX, textY, titleColor)
