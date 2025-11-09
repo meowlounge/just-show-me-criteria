@@ -7,6 +7,7 @@ import dev.prodbyeagle.jsmc.config.ShowMeCriteriaConfigManager
 import me.shedaniel.clothconfig2.api.ConfigBuilder
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.text.Text
+import kotlin.math.roundToInt
 
 open class ShowMeCriteriaModMenu : ModMenuApi {
 
@@ -77,15 +78,22 @@ open class ShowMeCriteriaModMenu : ModMenuApi {
                 .build()
         )
         hud.addEntry(
-            entryBuilder.startDoubleField(Text.literal("Scale"), working.hud.scale)
-                .setDefaultValue(1.0)
-                .setMin(0.5)
-                .setMax(3.0)
+            entryBuilder.startIntSlider(
+                Text.literal("Scale"),
+                (working.hud.scale * 100).toInt(),
+                50,
+                300
+            )
+                .setDefaultValue(100)
+                .setTextGetter { value ->
+                    Text.literal(String.format("%.2f×", value / 100.0))
+                }
                 .setSaveConsumer { value ->
-                    working.hud = working.hud.copy(scale = value.coerceIn(0.5, 3.0))
+                    working.hud = working.hud.copy(scale = (value / 100.0).coerceIn(0.5, 3.0))
                 }
                 .build()
         )
+
 
         val style = builder.getOrCreateCategory(Text.literal("Style"))
         style.addEntry(
@@ -104,6 +112,20 @@ open class ShowMeCriteriaModMenu : ModMenuApi {
             entryBuilder.startStrField(Text.literal("Status Text Color (hex)"), working.style.progressTextColor.orEmpty())
                 .setDefaultValue("")
                 .setSaveConsumer { working.style = working.style.copy(progressTextColor = it.trim().takeIf { str -> str.isNotEmpty() }) }
+                .build()
+        )
+        style.addEntry(
+            entryBuilder.startIntSlider(
+                Text.literal("Background Opacity"),
+                (working.style.backgroundOpacity * 100).roundToInt(),
+                0,
+                100
+            )
+                .setDefaultValue((ShowMeCriteriaConfig.StyleConfig.DEFAULT_OPACITY * 100).roundToInt())
+                .setTextGetter { value -> Text.literal("$value%") }
+                .setSaveConsumer { value ->
+                    working.style = working.style.copy(backgroundOpacity = (value / 100.0).coerceIn(0.0, 1.0))
+                }
                 .build()
         )
 

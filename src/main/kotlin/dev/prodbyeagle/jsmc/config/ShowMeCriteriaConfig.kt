@@ -41,6 +41,14 @@ data class ShowMeCriteriaConfig(
         @SerializedName("description_color")
         var descriptionColor: String? = null,
         @SerializedName("progress_text_color")
-        var progressTextColor: String? = null
-    )
+        var progressTextColor: String? = null,
+        @SerializedName("background_opacity")
+        var backgroundOpacity: Double = DEFAULT_OPACITY
+    ) {
+        fun normalizedOpacity(): Double = backgroundOpacity.coerceIn(0.0, 1.0)
+
+        companion object {
+            const val DEFAULT_OPACITY = 0.82
+        }
+    }
 }

@@ -6,11 +6,7 @@
   "mixins": [
   ],
   "client": [
-    "ClientAdvancementManagerAccessor",
-    "AdvancementTabAccessor",
-    "AdvancementWidgetAccessor",
-    "AdvancementsScreenAccessor",
-    "AdvancementsScreenMixin"
+    "ClientAdvancementManagerAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

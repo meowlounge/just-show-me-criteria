@@ -3,12 +3,11 @@
   "id": "jsmc",
   "version": "${version}",
   "name": "Just Show Me Criteria",
-  "description": "",
-  "authors": [],
-  "contact": {},
+  "description": "Pin any advancement and keep its remaining criteria visible on screen.",
+  "authors": ["prodbyeagle"],
   "license": "MIT",
   "icon": "assets/jsmc/icon.png",
-  "environment": "*",
+  "environment": "client",
   "entrypoints": {
     "modmenu": [
       {
@@ -16,14 +15,8 @@
         "value": "dev.prodbyeagle.jsmc.ShowMeCriteriaModMenu"
       }
     ],
-    "fabric-datagen": [
-      "dev.prodbyeagle.jsmc.client.ShowMeCriteriaDataGenerator"
-    ],
     "client": [
       "dev.prodbyeagle.jsmc.client.ShowMeCriteriaClient"
-    ],
-    "main": [
-      "dev.prodbyeagle.jsmc.ShowMeCriteria"
     ]
   },
   "mixins": [
