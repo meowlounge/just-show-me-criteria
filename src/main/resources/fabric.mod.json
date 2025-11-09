@@ -1,33 +1,33 @@
 {
   "schemaVersion": 1,
-  "id": "pinned-advancements",
+  "id": "jsmc",
   "version": "${version}",
-  "name": "pinned-advancements",
+  "name": "Just Show Me Criteria",
   "description": "",
   "authors": [],
   "contact": {},
   "license": "MIT",
-  "icon": "assets/pinned-advancements/icon.png",
+  "icon": "assets/jsmc/icon.png",
   "environment": "*",
   "entrypoints": {
     "modmenu": [
       {
         "adapter": "kotlin",
-        "value": "dev.prodbyeagle.pinnedAdvancements.ModMenuIntegration"
+        "value": "dev.prodbyeagle.jsmc.ShowMeCriteriaModMenu"
       }
     ],
     "fabric-datagen": [
-      "dev.prodbyeagle.pinnedAdvancements.client.PinnedAdvancementsDataGenerator"
+      "dev.prodbyeagle.jsmc.client.ShowMeCriteriaDataGenerator"
     ],
     "client": [
-      "dev.prodbyeagle.pinnedAdvancements.client.PinnedAdvancementsClient"
+      "dev.prodbyeagle.jsmc.client.ShowMeCriteriaClient"
     ],
     "main": [
-      "dev.prodbyeagle.pinnedAdvancements.PinnedAdvancements"
+      "dev.prodbyeagle.jsmc.ShowMeCriteria"
     ]
   },
   "mixins": [
-    "pinned-advancements.mixins.json"
+    "jsmc.mixins.json"
   ],
   "suggests": {
     "modmenu": "*"

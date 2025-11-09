@@ -1,4 +1,4 @@
-package dev.prodbyeagle.pinnedAdvancements.config
+package dev.prodbyeagle.jsmc.config
 
 import com.google.gson.GsonBuilder
 import net.fabricmc.loader.api.FabricLoader
@@ -8,9 +8,9 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardOpenOption
 
-object PinnedAdvancementsConfigManager {
+object ShowMeCriteriaConfigManager {
 
-    private val LOGGER = LoggerFactory.getLogger("PinnedAdvancements|Config")
+    private val LOGGER = LoggerFactory.getLogger("ShowMeCriteria|Config")
     private val GSON = GsonBuilder()
         .disableHtmlEscaping()
         .setPrettyPrinting()
@@ -18,9 +18,9 @@ object PinnedAdvancementsConfigManager {
 
     private val CONFIG_PATH: Path = FabricLoader.getInstance()
         .configDir
-        .resolve("pinned-advancements.json")
+        .resolve("jsmc.json")
 
-    var config: PinnedAdvancementsConfig = PinnedAdvancementsConfig()
+    var config: ShowMeCriteriaConfig = ShowMeCriteriaConfig()
         private set
 
     private var lastModified: Long = 0L
@@ -36,12 +36,12 @@ object PinnedAdvancementsConfigManager {
             }
 
             Files.newBufferedReader(CONFIG_PATH, StandardCharsets.UTF_8).use { reader ->
-                config = GSON.fromJson(reader, PinnedAdvancementsConfig::class.java) ?: PinnedAdvancementsConfig()
+                config = GSON.fromJson(reader, ShowMeCriteriaConfig::class.java) ?: ShowMeCriteriaConfig()
             }
             lastModified = Files.getLastModifiedTime(CONFIG_PATH).toMillis()
         } catch (throwable: Throwable) {
             LOGGER.error("Failed to load config at {}", CONFIG_PATH.toAbsolutePath(), throwable)
-            config = PinnedAdvancementsConfig()
+            config = ShowMeCriteriaConfig()
         }
     }
 
@@ -62,7 +62,7 @@ object PinnedAdvancementsConfigManager {
         write(config)
     }
 
-    private fun write(current: PinnedAdvancementsConfig) {
+    private fun write(current: ShowMeCriteriaConfig) {
         try {
             Files.createDirectories(CONFIG_PATH.parent)
             Files.newBufferedWriter(

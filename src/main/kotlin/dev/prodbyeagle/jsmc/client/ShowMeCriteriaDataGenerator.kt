@@ -1,9 +1,9 @@
-package dev.prodbyeagle.pinnedAdvancements.client
+package dev.prodbyeagle.jsmc.client
 
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 
-class PinnedAdvancementsDataGenerator : DataGeneratorEntrypoint {
+class ShowMeCriteriaDataGenerator : DataGeneratorEntrypoint {
 
     override fun onInitializeDataGenerator(fabricDataGenerator: FabricDataGenerator) {
         val pack = fabricDataGenerator.createPack()

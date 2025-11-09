@@ -1,4 +1,4 @@
-package dev.prodbyeagle.pinnedAdvancements.mixin;
+package dev.prodbyeagle.jsmc.mixin;
 
 import net.minecraft.advancement.AdvancementEntry;
 import net.minecraft.advancement.AdvancementManager;
@@ -13,8 +13,8 @@ import java.util.Map;
 public interface ClientAdvancementManagerAccessor {
 
     @Accessor("advancementProgresses")
-    Map<AdvancementEntry, AdvancementProgress> pinnedAdvancements_progresses();
+    Map<AdvancementEntry, AdvancementProgress> jsmc$getAdvancementProgresses();
 
     @Accessor("manager")
-    AdvancementManager pinnedAdvancements_manager();
+    AdvancementManager jsmc$getManager();
 }

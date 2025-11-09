@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "dev.prodbyeagle.pinnedAdvancements.mixin",
+  "package": "dev.prodbyeagle.jsmc.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
   ],

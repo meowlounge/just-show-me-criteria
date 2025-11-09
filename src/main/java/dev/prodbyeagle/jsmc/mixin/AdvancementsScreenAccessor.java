@@ -1,4 +1,4 @@
-package dev.prodbyeagle.pinnedAdvancements.mixin;
+package dev.prodbyeagle.jsmc.mixin;
 
 import net.minecraft.client.gui.screen.advancement.AdvancementTab;
 import net.minecraft.client.gui.screen.advancement.AdvancementsScreen;
@@ -9,5 +9,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface AdvancementsScreenAccessor {
 
     @Accessor("selectedTab")
-    AdvancementTab pinnedAdvancements_getSelectedTab();
+    AdvancementTab jsmc$getSelectedTab();
 }
