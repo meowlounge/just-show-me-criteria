@@ -2,6 +2,7 @@ package dev.prodbyeagle.jsmc
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory
 import com.terraformersmc.modmenu.api.ModMenuApi
+import dev.prodbyeagle.jsmc.client.hud.HudPanelStyle
 import dev.prodbyeagle.jsmc.config.ShowMeCriteriaConfig
 import dev.prodbyeagle.jsmc.config.ShowMeCriteriaConfigManager
 import me.shedaniel.clothconfig2.api.ConfigBuilder
@@ -97,21 +98,42 @@ open class ShowMeCriteriaModMenu : ModMenuApi {
 
         val style = builder.getOrCreateCategory(Text.literal("Style"))
         style.addEntry(
-            entryBuilder.startStrField(Text.literal("Header Color (hex)"), working.style.headerColor.orEmpty())
-                .setDefaultValue("")
-                .setSaveConsumer { working.style = working.style.copy(headerColor = it.trim().takeIf { str -> str.isNotEmpty() }) }
+            entryBuilder.startColorField(
+                Text.literal("Header Color"),
+                parseColorValue(working.style.headerColor, HudPanelStyle.FALLBACK_COLOR)
+            )
+                .setDefaultValue(HudPanelStyle.FALLBACK_COLOR and COLOR_RGB_MASK)
+                .setSaveConsumer { value ->
+                    working.style = working.style.copy(
+                        headerColor = colorValueOrNull(value, HudPanelStyle.FALLBACK_COLOR)
+                    )
+                }
                 .build()
         )
         style.addEntry(
-            entryBuilder.startStrField(Text.literal("Description Color (hex)"), working.style.descriptionColor.orEmpty())
-                .setDefaultValue("")
-                .setSaveConsumer { working.style = working.style.copy(descriptionColor = it.trim().takeIf { str -> str.isNotEmpty() }) }
+            entryBuilder.startColorField(
+                Text.literal("Description Color"),
+                parseColorValue(working.style.descriptionColor, HudPanelStyle.TEXT_COLOR_CRITERIA)
+            )
+                .setDefaultValue(HudPanelStyle.TEXT_COLOR_CRITERIA and COLOR_RGB_MASK)
+                .setSaveConsumer { value ->
+                    working.style = working.style.copy(
+                        descriptionColor = colorValueOrNull(value, HudPanelStyle.TEXT_COLOR_CRITERIA)
+                    )
+                }
                 .build()
         )
         style.addEntry(
-            entryBuilder.startStrField(Text.literal("Status Text Color (hex)"), working.style.progressTextColor.orEmpty())
-                .setDefaultValue("")
-                .setSaveConsumer { working.style = working.style.copy(progressTextColor = it.trim().takeIf { str -> str.isNotEmpty() }) }
+            entryBuilder.startColorField(
+                Text.literal("Status Text Color"),
+                parseColorValue(working.style.progressTextColor, HudPanelStyle.TEXT_COLOR_MUTED)
+            )
+                .setDefaultValue(HudPanelStyle.TEXT_COLOR_MUTED and COLOR_RGB_MASK)
+                .setSaveConsumer { value ->
+                    working.style = working.style.copy(
+                        progressTextColor = colorValueOrNull(value, HudPanelStyle.TEXT_COLOR_MUTED)
+                    )
+                }
                 .build()
         )
         style.addEntry(
@@ -147,5 +169,24 @@ open class ShowMeCriteriaModMenu : ModMenuApi {
             hud = this.hud.copy(),
             style = this.style.copy()
         )
+    }
+
+    private fun parseColorValue(raw: String?, fallback: Int): Int {
+        val parsed = HudPanelStyle.parseColor(raw, fallback)
+        return parsed and COLOR_RGB_MASK
+    }
+
+    private fun colorValueOrNull(value: Int, fallback: Int): String? {
+        val normalized = value and COLOR_RGB_MASK
+        val fallbackNormalized = fallback and COLOR_RGB_MASK
+        return if (normalized == fallbackNormalized) {
+            null
+        } else {
+            String.format("#%06X", normalized)
+        }
+    }
+
+    companion object {
+        private const val COLOR_RGB_MASK = 0xFFFFFF
     }
 }

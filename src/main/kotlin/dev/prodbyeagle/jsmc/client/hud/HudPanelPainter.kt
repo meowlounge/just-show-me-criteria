@@ -1,7 +1,6 @@
 package dev.prodbyeagle.jsmc.client.hud
 
 import dev.prodbyeagle.jsmc.client.ShowMeCriteriaDisplay
-import dev.prodbyeagle.jsmc.config.ShowMeCriteriaConfig
 import net.minecraft.client.font.TextRenderer
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.text.OrderedText
@@ -16,13 +15,11 @@ internal class HudPanelPainter(
         metrics: HudPanelMetrics,
         lineHeight: Int,
         opacity: Double,
-        config: ShowMeCriteriaConfig
+        headerColor: Int,
+        entryColor: Int,
+        overflowColor: Int
     ) {
         drawBackground(context, metrics, opacity)
-
-        val headerColor = HudPanelStyle.parseColor(config.style.headerColor, HudPanelStyle.FALLBACK_COLOR)
-        val entryColor = HudPanelStyle.parseColor(config.style.descriptionColor, HudPanelStyle.TEXT_COLOR_CRITERIA)
-        val overflowColor = HudPanelStyle.parseColor(config.style.progressTextColor, HudPanelStyle.TEXT_COLOR_MUTED)
 
         var y = HudPanelStyle.PADDING_Y
         y = drawLine(context, HudPanelStyle.headerText, y, headerColor, lineHeight)

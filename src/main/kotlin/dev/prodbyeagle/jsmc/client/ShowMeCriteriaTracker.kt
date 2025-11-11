@@ -5,8 +5,10 @@ import dev.prodbyeagle.jsmc.mixin.ClientAdvancementManagerAccessor
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.advancement.AdvancementProgress
 import net.minecraft.client.MinecraftClient
+import net.minecraft.client.font.TextRenderer
 import net.minecraft.text.Text
 import net.minecraft.util.Identifier
+import net.minecraft.util.Util
 
 object ShowMeCriteriaTracker {
 
@@ -17,7 +19,7 @@ object ShowMeCriteriaTracker {
         private set
 
     fun tick(client: MinecraftClient) {
-        ShowMeCriteriaConfigManager.reloadIfChanged()
+        maybeReloadConfig()
         val config = ShowMeCriteriaConfigManager.config
         if (!config.enabled) {
             reset()
@@ -52,14 +54,14 @@ object ShowMeCriteriaTracker {
         }
 
         val textRenderer = client.textRenderer
-        val factory = CriteriaRenderDataFactory(config, textRenderer)
+        val factory = getFactory(textRenderer)
         val frame = entry.value().display().orElse(null)?.frame
 
         display = ShowMeCriteriaDisplay(
             entry = entry,
             frame = frame,
             progress = progress,
-            criteria = factory.build(entry, progress),
+            criteria = factory.build(config, entry, progress),
         )
         error = null
     }
@@ -79,4 +81,25 @@ object ShowMeCriteriaTracker {
     private fun createEmptyProgress(entry: AdvancementEntry): AdvancementProgress {
         return AdvancementProgress().also { it.init(entry.value().requirements()) }
     }
+
+    private fun maybeReloadConfig() {
+        val now = Util.getMeasuringTimeMs()
+        if (now < nextConfigPollAt) return
+        ShowMeCriteriaConfigManager.reloadIfChanged()
+        nextConfigPollAt = now + CONFIG_POLL_INTERVAL_MS
+    }
+
+    private fun getFactory(textRenderer: TextRenderer): CriteriaRenderDataFactory {
+        val current = cachedFactory
+        if (current == null || cachedTextRenderer !== textRenderer) {
+            cachedTextRenderer = textRenderer
+            cachedFactory = CriteriaRenderDataFactory(textRenderer)
+        }
+        return cachedFactory!!
+    }
+
+    private const val CONFIG_POLL_INTERVAL_MS = 1_000L
+    private var nextConfigPollAt = 0L
+    private var cachedFactory: CriteriaRenderDataFactory? = null
+    private var cachedTextRenderer: TextRenderer? = null
 }
