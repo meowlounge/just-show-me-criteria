@@ -20,8 +20,13 @@ internal object AdvancementSelection {
         val entry = handler.advancementHandler.get(id)
             ?: throw SimpleCommandExceptionType(Text.literal("Advancement not found: $id")).create()
 
+        val entryId = entry.id()
+        if (AdvancementFilters.isRecipeAdvancement(entryId)) {
+            throw SimpleCommandExceptionType(Text.literal("Recipe advancements are ignored. Select a different advancement.")).create()
+        }
+
         val config = ShowMeCriteriaConfigManager.config
-        val idString = id.toString()
+        val idString = entryId.toString()
         if (config.pinnedAdvancement == idString) {
             source.sendFeedback(Text.literal("Already tracking $idString"))
             return Command.SINGLE_SUCCESS

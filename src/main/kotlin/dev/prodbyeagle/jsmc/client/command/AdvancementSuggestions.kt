@@ -33,6 +33,9 @@ internal object AdvancementSuggestions {
         }
         cachedManager = manager
         cachedAdvancementSize = advancementSize
-        cachedIds = manager.advancements.map { it.advancementEntry.id().toString() }
+        cachedIds = manager.advancements
+            .map { it.advancementEntry.id() }
+            .filterNot(AdvancementFilters::isRecipeAdvancement)
+            .map { it.toString() }
     }
 }
