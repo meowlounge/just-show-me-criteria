@@ -23,7 +23,7 @@
     "jsmc.mixins.json"
   ],
   "suggests": {
-    "modmenu": "*"
+    "modmenu": ">=${modmenu_version}"
   },
   "depends": {
     "fabricloader": ">=${loader_version}",

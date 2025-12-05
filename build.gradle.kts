@@ -59,7 +59,8 @@ tasks.processResources {
             "version" to project.version,
             "minecraft_version" to project.property("minecraft_version"),
             "loader_version" to project.property("loader_version"),
-            "kotlin_loader_version" to project.property("kotlin_loader_version")
+            "kotlin_loader_version" to project.property("kotlin_loader_version"),
+            "modmenu_version" to project.property("modmenu_version"),
         )
     }
 }
